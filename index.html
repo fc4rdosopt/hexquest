@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#0a1427">
+    <meta name="description" content="HexQuest — a minimalist hexagonal puzzle game. Discover the game modes and challenge your mind.">
+    <title>
+      HexQuest — Hexa Puzzle
+    </title>
+    <style>
+    :root {
+      color-scheme:dark;
+      --bg:#091426;
+      --panel:#12233c;
+      --line:#2b4263;
+      --muted:#a3b6d2;
+      --blue:#65b9ff
+    }
+    * {
+      box-sizing:border-box
+    }
+    html {
+      scroll-behavior:smooth
+    }
+    body {
+      margin:0;
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;
+      background:radial-gradient(ellipse at 50% 0%,#17345b 0%,#091426 55%);
+      color:#f4f8ff
+    }
+    a {
+      color:inherit;
+      text-decoration:none
+    }
+    .wrap {
+      max-width:1060px;
+      margin:auto;
+      padding:0 24px
+    }
+    header {
+      position:sticky;
+      top:0;
+      z-index:5;
+      background:#091426eb;
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid #28405c
+    }
+    header .wrap {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      min-height:72px
+    }
+    .brand {
+      font-weight:850;
+      font-size:22px;
+      letter-spacing:-.7px;
+      display:flex;
+      align-items:center;
+      gap:10px
+    }
+    .brand svg {
+      width:30px;
+      height:30px
+    }
+    nav {
+      display:flex;
+      gap:20px;
+      align-items:center
+    }
+    nav a {
+      color:#c5d7ed;
+      font-size:14px
+    }
+    nav a:hover {
+      color:#fff
+    }
+    select {
+      border:1px solid #3c5476;
+      border-radius:9px;
+      background:#172941;
+      color:#fff;
+      padding:8px
+    }
+    .hero {
+      text-align:center;
+      padding:94px 0 76px;
+      position:relative;
+      overflow:hidden
+    }
+    .eyebrow {
+      text-transform:uppercase;
+      letter-spacing:.23em;
+      color:#86caff;
+      font-size:12px;
+      font-weight:750
+    }
+    .hero h1 {
+      font-size:clamp(60px,11vw,112px);
+      letter-spacing:-.075em;
+      line-height:1;
+      margin:18px 0 8px
+    }
+    .hero h1 span {
+      color:#76c5ff
+    }
+    .lead {
+      color:#b9cbe4;
+      font-size:clamp(17px,2.3vw,21px);
+      max-width:570px;
+      margin:20px auto 28px
+    }
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#2489eb,#1562bc);
+      border:1px solid #6abaff;
+      padding:14px 24px;
+      border-radius:13px;
+      font-weight:750;
+      box-shadow:0 10px 30px #0004
+    }
+    .btn:hover {
+      filter:brightness(1.12)
+    }
+    .micro {
+      display:block;
+      margin-top:13px;
+      color:#8da5c2;
+      font-size:12px
+    }
+    .art {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin:45px auto 0;
+      max-width:460px;
+      filter:drop-shadow(0 20px 40px #0008)
+    }
+    .art svg {
+      width:100%;
+      height:auto
+    }
+    .section {
+      padding:64px 0
+    }
+    .section h2 {
+      font-size:clamp(27px,4vw,38px);
+      letter-spacing:-.04em;
+      text-align:center;
+      margin:0 0 12px
+    }
+    .sub {
+      text-align:center;
+      color:var(--muted);
+      margin:0 auto 32px;
+      max-width:600px
+    }
+    .modes {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px
+    }
+    .mode {
+      background:linear-gradient(160deg,#172e4c,#112039);
+      border:1px solid #2e496b;
+      border-radius:17px;
+      padding:25px;
+      min-height:165px
+    }
+    .mode .symbol {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:46px;
+      height:46px;
+      border:1px solid #37628a;
+      border-radius:13px;
+      background:#1c4165;
+      color:#8bd2ff;
+      font-size:24px;
+      margin-bottom:15px
+    }
+    .mode h3 {
+      margin:0 0 6px;
+      font-size:18px
+    }
+    .mode p {
+      margin:0;
+      color:#b0c4df;
+      font-size:14px
+    }
+    .feature {
+      background:#12243d;
+      border:1px solid #304969;
+      border-radius:20px;
+      padding:34px;
+      display:flex;
+      gap:24px;
+      align-items:center;
+      justify-content:space-between
+    }
+    .feature h2 {
+      text-align:left;
+      margin:0 0 8px
+    }
+    .feature p {
+      color:var(--muted);
+      margin:0
+    }
+    .feature .symbol {
+      font-size:60px;
+      color:#8ccaff
+    }
+    .links {
+      display:flex;
+      gap:15px;
+      flex-wrap:wrap;
+      margin-top:18px
+    }
+    .links a {
+      color:#83c9ff;
+      text-decoration:underline;
+      text-underline-offset:4px
+    }
+    footer {
+      border-top:1px solid #29405c;
+      margin-top:65px;
+      padding:28px 0;
+      color:#91a9c8;
+      font-size:13px
+    }
+    footer .wrap {
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap
+    }
+    footer a {
+      color:#bcd9f4
+    }
+    @media(max-width:700px) {
+      header .wrap {
+        min-height:65px
+      }
+      nav {
+        gap:10px
+      }
+      nav a {
+        font-size:12px
+      }
+      .brand {
+        font-size:18px
+      }
+      .modes {
+        grid-template-columns:repeat(2,minmax(0,1fr))
+      }
+      .mode {
+        padding:17px
+      }
+      .hero {
+        padding:70px 0 45px
+      }
+      .feature {
+        align-items:flex-start
+      }
+      .feature .symbol {
+        display:none
+      }
+    }
+    @media(max-width:390px) {
+      .modes {
+        grid-template-columns:1fr
+      }
+      nav a:nth-child(2) {
+        display:none
+      }
+    }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <a class="brand" href="./">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <polygon points="50,4 90,27 90,73 50,96 10,73 10,27" fill="#237bd2" stroke="#8ed0ff" stroke-width="5"/>
+            <polygon points="50,25 71,37 71,62 50,75 29,62 29,37" fill="#0e2a4b" stroke="#9ddaff" stroke-width="4"/>
+          </svg>
+          HexQuest
+        </a>
+        <nav>
+          <a href="#modes" data-i="navModes">
+            Game modes
+          </a>
+          <a href="hexquest-privacy" data-i="navPrivacy">
+            Privacy & Terms
+          </a>
+          <select id="lang" aria-label="Language">
+            <option value="en">
+              EN
+            </option>
+            <option value="pt">
+              PT
+            </option>
+            <option value="es">
+              ES
+            </option>
+            <option value="fr">
+              FR
+            </option>
+            <option value="it">
+              IT
+            </option>
+            <option value="de">
+              DE
+            </option>
+          </select>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="hero wrap">
+        <div class="eyebrow" data-i="eyebrow">
+          Hexagonal puzzle game
+        </div>
+        <h1>
+          HEX
+          <span>
+            QUEST
+          </span>
+        </h1>
+        <div class="eyebrow">
+          HEXA PUZZLE
+        </div>
+        <p class="lead" data-i="lead">
+          Simple to learn. Challenging to master. Explore a world of hexagonal puzzles.
+        </p>
+        <a class="btn" id="store" href="https://play.google.com/store/apps/details?id=com.hexquest.game" target="_blank" rel="noopener noreferrer" data-i="play">
+          Get it on Google Play
+        </a>
+        <span class="micro" data-i="free">
+          Free to play · Android
+        </span>
+      </section>
+      <section id="modes" class="section wrap">
+        <h2 data-i="modesTitle">
+          One game. Many challenges.
+        </h2>
+        <p class="sub" data-i="modesSub">
+          Find your favourite way to play.
+        </p>
+        <div class="modes">
+          <article class="mode">
+            <div class="symbol">
+              ⬡
+            </div>
+            <h3>
+              Classic
+            </h3>
+            <p data-i="classic">
+              Clear lines and beat your personal best.
+            </p>
+          </article>
+          <article class="mode">
+            <div class="symbol">
+              ⚡
+            </div>
+            <h3>
+              Time Attack
+            </h3>
+            <p data-i="time">
+              Race against time and keep going.
+            </p>
+          </article>
+          <article class="mode">
+            <div class="symbol">
+              ◎
+            </div>
+            <h3>
+              Challenges
+            </h3>
+            <p data-i="challenges">
+              Complete objectives and earn rewards.
+            </p>
+          </article>
+          <article class="mode">
+            <div class="symbol">
+              ◈
+            </div>
+            <h3>
+              Puzzle
+            </h3>
+            <p data-i="levels">
+              Progress through colour-based puzzles.
+            </p>
+          </article>
+          <article class="mode">
+            <div class="symbol">
+              ✦
+            </div>
+            <h3>
+              Match-3
+            </h3>
+            <p data-i="match">
+              Make matches with limited moves.
+            </p>
+          </article>
+          <article class="mode">
+            <div class="symbol">
+              ↗
+            </div>
+            <h3>
+              Arrows
+            </h3>
+            <p data-i="arrows">
+              Solve paths, rotations and logic puzzles.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="section wrap">
+        <div class="feature">
+          <div>
+            <h2 data-i="rankTitle">
+              Compete globally
+            </h2>
+            <p data-i="rankText">
+              Challenge your best Classic score and climb the global leaderboard through Google Play Games.
+            </p>
+          </div>
+          <div class="symbol" aria-hidden="true">
+            🏆
+          </div>
+        </div>
+      </section>
+      <section class="section wrap" id="support">
+        <h2 data-i="helpTitle">
+          Support & privacy
+        </h2>
+        <p class="sub" data-i="helpText">
+          Questions, feedback or privacy information? We're here to help.
+        </p>
+        <div class="links" style="justify-content:center">
+          <a href="hexquest-privacy" data-i="policy">
+            Privacy Policy & Terms
+          </a>
+          <a href="mailto:Fc4rdoso@gmail.com" data-i="contact">
+            Contact support
+          </a>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap">
+        <span>
+          © 2026 HexQuest · onuRuno Studio
+        </span>
+        <span>
+          <a href="hexquest-privacy" data-i="footerPrivacy">
+            Privacy & Terms
+          </a>
+          ·
+          <a href="mailto:Fc4rdoso@gmail.com">
+            Contact
+          </a>
+        </span>
+      </div>
+    </footer>
+    <script>
+    const T = {
+       en:{
+        navModes:'Game modes',
+        navPrivacy:'Privacy & Terms',
+        eyebrow:'Hexagonal puzzle game',
+        lead:'Simple to learn. Challenging to master. Explore a world of hexagonal puzzles.',
+        play:'Get it on Google Play',
+        free:'Free to play · Android',
+        modesTitle:'One game. Many challenges.',
+        modesSub:'Find your favourite way to play.',
+        classic:'Clear lines and beat your personal best.',
+        time:'Race against time and keep going.',
+        challenges:'Complete objectives and earn rewards.',
+        levels:'Progress through colour-based puzzles.',
+        match:'Make matches with limited moves.',
+        arrows:'Solve paths, rotations and logic puzzles.',
+        rankTitle:'Compete globally',
+        rankText:'Challenge your best Classic score and climb the global leaderboard through Google Play Games.',
+        helpTitle:'Support & privacy',
+        helpText:"Questions, feedback or privacy information? We're here to help.",
+        policy:'Privacy Policy & Terms',
+        contact:'Contact support',
+        footerPrivacy:'Privacy & Terms'},
+      pt: {
+        navModes:'Modos de jogo',
+        navPrivacy:'Privacidade e Termos',
+        eyebrow:'Jogo de puzzles hexagonais',
+        lead:'Fácil de aprender. Difícil de dominar. Explora um mundo de puzzles hexagonais.',
+        play:'Disponível no Google Play',
+        free:'Gratuito · Android',
+        modesTitle:'Um jogo. Muitos desafios.',
+        modesSub:'Descobre a tua forma favorita de jogar.',
+        classic:'Limpa linhas e supera o teu recorde.',
+        time:'Desafia o tempo e continua a jogar.',
+        challenges:'Cumpre objetivos e ganha recompensas.',
+        levels:'Avança em puzzles baseados em cores.',
+        match:'Cria combinações com jogadas limitadas.',
+        arrows:'Resolve caminhos, rotações e desafios de lógica.',
+        rankTitle:'Compete a nível global',
+        rankText:'Supera o teu recorde no Clássico e sobe no ranking global através do Google Play Games.',
+        helpTitle:'Apoio e privacidade',
+        helpText:'Dúvidas, sugestões ou informações sobre privacidade? Contacta-nos.',
+        policy:'Política de Privacidade e Termos',
+        contact:'Contactar suporte',
+        footerPrivacy:'Privacidade e Termos'},
+      es: {
+        navModes:'Modos de juego',
+        navPrivacy:'Privacidad y términos',
+        eyebrow:'Juego de puzles hexagonales',
+        lead:'Fácil de aprender. Difícil de dominar. Explora un mundo de puzles hexagonales.',
+        play:'Disponible en Google Play',
+        free:'Gratis · Android',
+        modesTitle:'Un juego. Muchos desafíos.',
+        modesSub:'Descubre tu forma favorita de jugar.',
+        classic:'Elimina líneas y supera tu récord.',
+        time:'Compite contra el reloj.',
+        challenges:'Completa objetivos y consigue recompensas.',
+        levels:'Avanza en puzles de colores.',
+        match:'Haz combinaciones con movimientos limitados.',
+        arrows:'Resuelve caminos, rotaciones y puzles de lógica.',
+        rankTitle:'Compite globalmente',
+        rankText:'Supera tu récord en Clásico y asciende en la clasificación mundial con Google Play Games.',
+        helpTitle:'Ayuda y privacidad',
+        helpText:'¿Preguntas, sugerencias o información sobre privacidad?',
+        policy:'Privacidad y términos',
+        contact:'Contactar',
+        footerPrivacy:'Privacidad y términos'},
+      fr: {
+        navModes:'Modes de jeu',
+        navPrivacy:'Confidentialité et conditions',
+        eyebrow:'Jeu de puzzle hexagonal',
+        lead:'Facile à apprendre. Difficile à maîtriser. Explorez des puzzles hexagonaux.',
+        play:'Disponible sur Google Play',
+        free:'Gratuit · Android',
+        modesTitle:'Un jeu. De nombreux défis.',
+        modesSub:'Trouvez votre façon de jouer.',
+        classic:'Effacez des lignes et battez votre record.',
+        time:'Affrontez le chronomètre.',
+        challenges:'Atteignez des objectifs et gagnez des récompenses.',
+        levels:'Progressez dans des puzzles de couleurs.',
+        match:'Faites des combinaisons en un nombre limité de coups.',
+        arrows:'Résolvez des parcours et des puzzles logiques.',
+        rankTitle:'Défiez le monde',
+        rankText:'Améliorez votre score Classique et grimpez au classement mondial via Google Play Games.',
+        helpTitle:'Assistance et confidentialité',
+        helpText:'Des questions ou des suggestions ? Contactez-nous.',
+        policy:'Confidentialité et conditions',
+        contact:'Contacter le support',
+        footerPrivacy:'Confidentialité et conditions'},
+      it: {
+        navModes:'Modalità di gioco',
+        navPrivacy:'Privacy e termini',
+        eyebrow:'Puzzle esagonale',
+        lead:'Facile da imparare. Difficile da padroneggiare. Scopri i puzzle esagonali.',
+        play:'Disponibile su Google Play',
+        free:'Gratis · Android',
+        modesTitle:'Un gioco. Tante sfide.',
+        modesSub:'Trova il tuo modo preferito di giocare.',
+        classic:'Elimina le linee e supera il tuo record.',
+        time:'Sfida il tempo.',
+        challenges:'Completa obiettivi e ottieni premi.',
+        levels:'Avanza nei puzzle basati sui colori.',
+        match:'Crea combinazioni con mosse limitate.',
+        arrows:'Risolvi percorsi e puzzle di logica.',
+        rankTitle:'Sfida il mondo',
+        rankText:'Migliora il record Classico e scala la classifica mondiale con Google Play Games.',
+        helpTitle:'Supporto e privacy',
+        helpText:'Domande, suggerimenti o informazioni sulla privacy?',
+        policy:'Privacy e termini',
+        contact:'Contatta il supporto',
+        footerPrivacy:'Privacy e termini'},
+      de: {navModes:'Spielmodi',navPrivacy:'Datenschutz & Bedingungen',eyebrow:'Hexagonales Puzzlespiel',lead:'Leicht zu lernen. Schwer zu meistern. Entdecke hexagonale Rätsel.',play:'Bei Google Play erhältlich',free:'Kostenlos · Android',modesTitle:'Ein Spiel. Viele Herausforderungen.',modesSub:'Finde deinen Lieblingsspielmodus.',classic:'Entferne Linien und schlage deinen Rekord.',time:'Spiele gegen die Zeit.',challenges:'Erfülle Ziele und erhalte Belohnungen.',levels:'Löse farbbasierte Rätsel.',match:'Kombiniere mit begrenzten Zügen.',arrows:'Löse Wege, Drehungen und Logikrätsel.',rankTitle:'Weltweit antreten',rankText:'Verbessere deinen Klassik-Rekord und steige in der globalen Rangliste über Google Play Games auf.',helpTitle:'Support & Datenschutz',helpText:'Fragen, Feedback oder Informationen zum Datenschutz?',policy:'Datenschutz & Bedingungen',contact:'Support kontaktieren',footerPrivacy:'Datenschutz & Bedingungen'}
+    };
+    
+    function setLang(l) {
+       if(!T[l])l='en';
+      document.documentElement.lang=l;
+      document.querySelectorAll('[data-i]').forEach(e=>e.textContent=T[l][e.dataset.i]);
+      document.getElementById('lang').value=l;
+      localStorage.setItem('hexquest-language',l)}
+    
+    document.getElementById('lang').addEventListener('change',e=>setLang(e.target.value));
+    
+    let saved =  localStorage.getItem('hexquest-language');
+    setLang(T[saved]?saved:(navigator.language||'en').slice(0,2));
+    </script>
+  </body>
+</html>
